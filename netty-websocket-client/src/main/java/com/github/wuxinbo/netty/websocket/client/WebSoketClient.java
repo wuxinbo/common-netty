@@ -14,11 +14,15 @@ public interface WebSoketClient {
      */
     Channel connect();
 
+//    /**
+//     * 断开连接
+//     */
+//    void releaseResource();
+
     /**
      * 断开连接
      */
     void disconnect();
-
     /**
      * 是否在线
      * @return true 是，false 否

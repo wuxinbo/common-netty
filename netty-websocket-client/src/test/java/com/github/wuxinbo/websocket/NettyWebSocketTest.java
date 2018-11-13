@@ -20,6 +20,7 @@ public class NettyWebSocketTest {
         client.setClientConfig(config);
         client.conn();
         client.sendText("hello,world",null );
+        client.releaseResource();
         Thread.sleep(3000);
     }
 }

@@ -61,7 +61,10 @@ public class NettyWebsocketClient implements WebSoketClient{
         if (online()&& !StringUtil.isNullOrEmpty(msg)){ //没有掉线就发起请求
             listener =listener==null?dataSendListener:listener;
             channel.writeAndFlush(new TextWebSocketFrame(msg)).addListener(listener);
+        }else{ //如果掉线或消息为空不发送
+            logger.info("msg not send!","msg is "+msg);
         }
+
     }
 
     public ClientConfig getClientConfig() {
@@ -97,17 +100,15 @@ public class NettyWebsocketClient implements WebSoketClient{
     }
 
     /**
-     * 资源释放
+     * 资源释放,默认等待5秒钟
      */
     public void releaseResource() {
         //先断开连接
         disconnect();
         try {
             if (lookGroup != null) { //关闭线程
-                lookGroup.awaitTermination(10 * 1000, TimeUnit.SECONDS);
+                lookGroup.awaitTermination(5, TimeUnit.SECONDS);
             }
-//            if (bootstrap!=null){
-//            }
         } catch (InterruptedException e) {
             logger.error("netty shutdown fail ", e);
         }
@@ -123,7 +124,6 @@ public class NettyWebsocketClient implements WebSoketClient{
         //获取连接参数
         Bootstrap boot = init();
         try {
-
             URI uri = new URI(clientConfig.getUrl());
             DefaultHttpHeaders headers = new DefaultHttpHeaders();
             WebSocketClientHandshaker webSocketClientHandshaker = new CustomWebSocketClienthandshark13(uri,
