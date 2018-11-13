@@ -1,6 +1,7 @@
-package com.github.wuxinbo.netty.websocket.client;
+package com.github.wuxinbo.websocket.client;
 
 
+import com.github.wuxinbo.websocket.client.listener.DataSendListener;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 

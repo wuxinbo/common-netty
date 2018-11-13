@@ -1,4 +1,4 @@
-package com.github.wuxinbo.netty.websocket.client;
+package com.github.wuxinbo.websocket.client.handler;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.slf4j.Logger;

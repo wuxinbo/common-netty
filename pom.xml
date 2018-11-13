@@ -7,13 +7,15 @@
     <groupId>com.github.wuxinbo</groupId>
     <artifactId>common-netty</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <modules>
-        <module>netty-websocket-client</module>
+        <module>websocket-client</module>
+        <module>websocket-server</module>
     </modules>
     <!--netty-->
     <properties>
         <netty.version>4.1.25.Final</netty.version>
+        <slf4j.log.version>1.7.24</slf4j.log.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -25,7 +27,13 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.24</version>
+                <version>${slf4j.log.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>6.13.1</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

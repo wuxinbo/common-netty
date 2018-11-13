@@ -1,5 +1,6 @@
-package com.github.wuxinbo.netty.websocket.client;
+package com.github.wuxinbo.websocket.client.handler;
 
+import com.github.wuxinbo.websocket.client.WebSoketClient;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.SimpleChannelInboundHandler;

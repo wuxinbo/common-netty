@@ -1,8 +1,8 @@
 package com.github.wuxinbo.websocket;
 
-import com.github.wuxinbo.netty.websocket.client.ClientConfig;
-import com.github.wuxinbo.netty.websocket.client.NettyWebsocketClient;
-import com.github.wuxinbo.netty.websocket.client.WebSocketClientChannelInitializer;
+import com.github.wuxinbo.websocket.client.config.ClientConfig;
+import com.github.wuxinbo.websocket.client.NettyWebsocketClient;
+import com.github.wuxinbo.websocket.client.WebSocketClientChannelInitializer;
 import org.testng.annotations.Test;
 
 /**

@@ -1,4 +1,4 @@
-package com.github.wuxinbo.netty.websocket.client;
+package com.github.wuxinbo.websocket.client.listener;
 
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
