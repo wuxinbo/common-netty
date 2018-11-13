@@ -18,7 +18,7 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
     private WebSocketClientHandshaker handshaker;
     private ChannelPromise promise;
 
-    private NettyWebsocketClient nettyWebsocketClient=null;
+    private WebSoketClient client=null;
     /**
      * 消息处理，支持处理文本和二进制
      */
@@ -33,12 +33,12 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
         this.handshaker = handshaker;
     }
 
-    public NettyWebsocketClient getNettyWebsocketClient() {
-        return nettyWebsocketClient;
+    public WebSoketClient getClient() {
+        return client;
     }
 
-    public void setNettyWebsocketClient(NettyWebsocketClient nettyWebsocketClient) {
-        this.nettyWebsocketClient = nettyWebsocketClient;
+    public void setClient(WebSoketClient client) {
+        this.client = client;
     }
 
     @Override
@@ -64,8 +64,7 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 //        super.exceptionCaught(ctx, cause);
         logger.error("websocket is disconnect", cause);
-        nettyWebsocketClient.disconnect();
-//        nettyWebsocketClient.login();
+        client.disconnect();
     }
 
     @Override
@@ -79,7 +78,7 @@ public class WebSocketClientHandler extends SimpleChannelInboundHandler<Object> 
 //        super.channelInactive(ctx);
         logger.info("channel is inActive");
         //断线重连
-//        nettyWebsocketClient.login();
+        client.connect();
     }
 
     @Override

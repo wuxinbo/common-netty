@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 消息发送监听器
+ * 消息发送监听器,可以在此处理消息的发送状态
  */
-public class BinaryDataSendListener implements ChannelFutureListener {
+public class DataSendListener implements ChannelFutureListener {
 
     private Logger logger= LoggerFactory.getLogger(getClass());
 

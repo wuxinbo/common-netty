@@ -3,8 +3,6 @@ package com.github.wuxinbo.websocket;
 import com.github.wuxinbo.netty.websocket.client.ClientConfig;
 import com.github.wuxinbo.netty.websocket.client.NettyWebsocketClient;
 import com.github.wuxinbo.netty.websocket.client.WebSocketClientChannelInitializer;
-import io.netty.channel.Channel;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.testng.annotations.Test;
 
 /**
@@ -20,9 +18,8 @@ public class NettyWebSocketTest {
         NettyWebsocketClient client=new NettyWebsocketClient();
         ClientConfig config =new ClientConfig("ws://121.40.165.18:8800", new WebSocketClientChannelInitializer());
         client.setClientConfig(config);
-        Channel conn = client.conn();
-        TextWebSocketFrame frame =new TextWebSocketFrame("hello,world");
-        conn.writeAndFlush(frame);
+        client.conn();
+        client.sendText("hello,world",null );
         Thread.sleep(3000);
     }
 }

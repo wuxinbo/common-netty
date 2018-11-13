@@ -3,14 +3,17 @@ package com.github.wuxinbo.netty.websocket.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +21,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
-
-public class NettyWebsocketClient {
+/**
+ * webclient 默认实现。
+ */
+public class NettyWebsocketClient implements WebSoketClient{
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
@@ -36,6 +41,12 @@ public class NettyWebsocketClient {
      * 配置信息
      */
     private ClientConfig clientConfig=null;
+    //数据发送监听器
+    protected static ChannelFutureListener dataSendListener=new DataSendListener();
+    public Channel connect() {
+        return conn();
+    }
+
     /**
      * 断开连接,
      */
@@ -44,6 +55,13 @@ public class NettyWebsocketClient {
             channel.disconnect();
         }
         this.channel = null;
+    }
+
+    public void sendText(String msg, ChannelFutureListener listener) {
+        if (online()&& !StringUtil.isNullOrEmpty(msg)){ //没有掉线就发起请求
+            listener =listener==null?dataSendListener:listener;
+            channel.writeAndFlush(new TextWebSocketFrame(msg)).addListener(listener);
+        }
     }
 
     public ClientConfig getClientConfig() {
@@ -116,10 +134,10 @@ public class NettyWebsocketClient {
                     65535);
 
             logger.info("conn .....");
-            Channel channel = boot.connect(uri.getHost(), uri.getPort()).sync().channel();
+            channel = boot.connect(uri.getHost(), uri.getPort()).sync().channel();
             WebSocketClientHandler handler = (WebSocketClientHandler) channel.pipeline().get("handler");
             handler.setHandshaker(webSocketClientHandshaker);
-            handler.setNettyWebsocketClient(this);
+            handler.setClient(this);
             handler.getHandshaker().handshake(channel);
             handler.getPromise().sync();
             return channel;
